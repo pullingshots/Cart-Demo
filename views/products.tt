@@ -1,0 +1,24 @@
+
+  <h1>Product list</h1>
+  <table class='table table-bordered'>
+    <thead>
+      <tr>
+        <th>Sku</th><th>Price</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% FOREACH product IN product_list %>
+      <tr>
+        <td> <% product.ec_sku %> </td>
+        <td> <% product.ec_price %> </td>
+        <td>
+          <form method='post' action='cart/add'>
+            <input type='hidden' name='ec_sku' value='<% product.ec_sku %>'>
+            <input type='hidden' name='ec_quantity' value='1'>
+            <input type='submit' value = 'Add' class='btn btn-primary'>
+          </form>
+        </td>
+      </tr>
+    <% END %>
+    </tbody>
+  </table>

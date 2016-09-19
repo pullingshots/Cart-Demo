@@ -1,0 +1,45 @@
+<h1>Shipping</h1><% IF ec_cart.cart.items.size %><h2>Cart info</h2>
+    <table class='table table-bordered'>
+      <thead>
+        <tr>
+          <th>SKU</th><th>Quantity</th><th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% FOREACH item IN ec_cart.cart.items %>
+        <tr>
+          <td>  <% item.ec_sku %> </td>
+          <td><% item.ec_quantity  %> </td><td><% item.ec_price %> </td>
+        </tr>
+    <% END %>
+        <tr>
+          <td colspan=2 align='right'>Subtotal</td><td><% ec_cart.cart.subtotal %></td>
+        </tr>
+      <% FOREACH adjustment IN ec_cart.cart.adjustments %>
+        <tr><td colspan=2 align='right'><% adjustment.description %></td><td><% adjustment.value %></td></tr> 
+      <% END %> 
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan=2 align='right'>Total</td><td> <% ec_cart.cart.total %> </td>
+        </tr>
+      </tfoot>
+    </table>
+    <% FOREACH error = ec_cart.add.error %>
+      <p> <% error %> </p>
+    <% END %><% ELSE %>
+    <p>Your cart is empty</p>
+  <% END %><% IF ec_cart.cart.items.size %>
+  <% FOREACH error = ec_cart.shipping.error %>
+    <p> <% error %> </p>
+  <% END %>
+  <h2>Shipping info</h2>
+  <form method='post' action='shipping'>
+    <fieldset class='form-group'>
+      <label for='email'>Email address</label>
+      <input type='email' name='email' class='form-control' value='<% ec_cart.shipping.form.email %>' placeholder='email@domain.com' required >
+      <small class='text-muted'>We'll never share your email with anyone else.</small>
+    </fieldset>
+    <a href='../cart' class='btn btn-primary'>Back</a>
+    <input type='submit' value = 'Continue' class='btn btn-primary'>
+  </form><% END %>
