@@ -14,4 +14,16 @@ hook 'plugin.cart.products' => sub {
   session ec_cart => $ec_cart;
 };
 
+hook 'plugin.cart.after_checkout' => sub {
+  use Dancer2::Plugin::Email;
+  my $email = session('ec_cart')->{billing}->{form}->{email};
+  email {
+    from => 'andrew.baerg@gmail.com',
+    to => $email,
+    subject => 'Receipt',
+    type => 'html',
+    body => template 'cart/receipt', { cart => session('ec_cart') }, { layout => 'cart.tt' },
+  };
+};
+
 true;
