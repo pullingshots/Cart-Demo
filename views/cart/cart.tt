@@ -1,0 +1,44 @@
+<% IF ec_cart.cart.items.size %><h2>Cart info</h2>
+    <table class='table table-bordered'>
+      <thead>
+        <tr>
+          <th>SKU</th><th></th><th>Quantity</th><th></th><th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% FOREACH item IN ec_cart.cart.items %>
+        <tr>
+          <td>  <% item.ec_sku %> </td>
+          <td><form method='post' action='cart/add'>
+          <input type='hidden' name='ec_sku' value='<% item.ec_sku %>'>
+          <input type='hidden' name='ec_quantity' value='-1'>
+          <input type='submit' value = '-1' class='btn btn-primary'>
+          </form></td>
+          <td><% item.ec_quantity  %> </td><td><form method='post' action='cart/add'>
+            <input type='hidden' name='ec_sku' value='<% item.ec_sku %>'>
+            <input type='hidden' name='ec_quantity' value='1'>
+            <input type='submit' value = '+1' class='btn btn-primary'>
+            </form></td><td><% item.ec_price %> </td>
+        </tr>
+    <% END %>
+        <tr>
+          <td colspan=4 align='right'>Subtotal</td><td><% ec_cart.cart.subtotal %></td>
+        </tr>
+      <% FOREACH adjustment IN ec_cart.cart.adjustments %>
+        <tr><td colspan=4 align='right'><% adjustment.description %></td><td><% adjustment.value %></td></tr> 
+      <% END %> 
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan=4 align='right'>Total</td><td> <% ec_cart.cart.total %> </td>
+        </tr>
+      </tfoot>
+    </table>
+    <% FOREACH error = ec_cart.add.error %>
+      <p> <% error %> </p>
+    <% END %><% IF 1 %>
+       <p><a class='btn btn-primary' href='cart/clear'> Clear your cart. </a></p>
+      <% END %><% ELSE %>
+    <p>Your cart is empty</p>
+  <% END %><% IF ec_cart.cart.items.size > 0 %> <p><a class='btn btn-primary' href='cart/shipping'> Checkout </a></p><% END %>
+  <p> <a class='btn btn-primary' href='products'>Continue shopping</a></p>

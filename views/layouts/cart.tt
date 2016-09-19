@@ -1,0 +1,41 @@
+
+		<!DOCTYPE html>
+		<html lang='en'>
+		<head>
+			<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes'>
+			<title>Cart</title>
+			<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+			<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+			<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+		</head>
+		<body>
+  <nav class='navbar navbar-default'>
+    
+      <div class='navbar-header'>
+        <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#menu-options' aria-expanded='false'>
+          <span class='sr-only'>Toggle navigation</span>
+          <span class='icon-bar'></span>
+          <span class='icon-bar'></span>
+          <span class='icon-bar'></span>
+        </button>
+        <a class='navbar-brand' href='#'>Cart</a>
+      </div>
+    </div>
+    <div class='collapse navbar-collapse' id='menu-options'>
+      <ul class='nav navbar-nav navbar-right'>
+        <li><a href='/products'>Products</a></li>
+        <li><a href='/cart'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span></a></li>
+         <li class='dropdown'>
+          <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>About<span class='caret'></span></a>
+          <ul class='dropdown-menu'>
+            <li><a href='https://github.com/YourSole/Cart'>Github</a></li>
+          </ul>
+        </li>
+      </ul>
+</nav>
+			<div class='container'>
+				<% content %> 
+			</div>
+		</body>
+		</html>
+	
