@@ -1,0 +1,31 @@
+PREV=1
+STEP=1
+
+clear
+while true; do
+  echo $STEP
+  read -n2 -r input
+  clear
+  if [ "$input" = "nn" ]; then
+    PREV=$STEP
+    STEP=$(expr $STEP + 1)
+    git checkout $STEP
+    git diff --stat $PREV..$STEP
+    git diff $PREV..$STEP
+  fi
+  if [ "$input" = "pp" ]; then
+    STEP=$PREV
+    PREV=$(expr $PREV - 1)
+    git checkout $STEP
+    git diff --stat $PREV..$STEP
+    git diff $PREV..$STEP
+  fi
+  if (( $input > 0 )); then
+    STEP=$input
+    STEP=$((10#$STEP))
+    PREV=$(expr $STEP - 1)
+    git checkout $STEP
+    git diff --stat $PREV..$STEP
+    git diff $PREV..$STEP
+  fi
+done
