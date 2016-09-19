@@ -3,13 +3,14 @@
   <table class='table table-bordered'>
     <thead>
       <tr>
-        <th>Sku</th><th>Price</th><th>Action</th>
+        <th>Sku</th><th>Description</th><th>Price</th><th>Action</th>
       </tr>
     </thead>
     <tbody>
     <% FOREACH product IN product_list %>
       <tr>
         <td> <% product.ec_sku %> </td>
+        <td> <% product.description %> </td>
         <td> <% product.ec_price %> </td>
         <td>
           <form method='post' action='cart/add'>
