@@ -39,7 +39,9 @@
     <fieldset class='form-group'>
       <label for='email'>Email address</label>
       <input type='email' name='email' class='form-control' value='<% ec_cart.shipping.form.email %>' placeholder='email@domain.com' required >
-      <small class='text-muted'>We'll never share your email with anyone else.</small>
+      <small class='text-muted'>We'll never share your email with anyone else.</small><br />
+      <label for='coupon'>Coupon</label>
+      <input type='text' name='coupon' class='form-control' value='<% ec_cart.shipping.form.coupon %>' placeholder='' >
     </fieldset>
     <a href='../cart' class='btn btn-primary'>Back</a>
     <input type='submit' value = 'Continue' class='btn btn-primary'>
