@@ -30,6 +30,15 @@ hook 'plugin.cart.adjustments' => sub {
   session ec_cart => $ec_cart;
 };
 
+hook 'plugin.cart.adjustments' => sub {
+  my $ec_cart = session('ec_cart');
+  my $coupon = $ec_cart->{shipping}->{form}->{coupon};
+  if ($coupon && $coupon eq 'DANCER2016') {
+    push @{$ec_cart->{cart}->{adjustments}}, { description => 'Perl::Dancer 2016 Conference Discount', value => -50 };
+  }
+  session ec_cart => $ec_cart;
+};
+
 hook 'plugin.cart.after_checkout' => sub {
   use Dancer2::Plugin::Email;
   my $email = session('ec_cart')->{billing}->{form}->{email};
