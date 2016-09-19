@@ -3,26 +3,27 @@
     <table class='table table-bordered'>
       <thead>
         <tr>
-          <th>SKU</th><th>Quantity</th><th>Price</th>
+          <th>SKU</th><th>Description</th><th>Quantity</th><th>Price</th>
         </tr>
       </thead>
       <tbody>
     <% FOREACH item IN ec_cart.cart.items %>
         <tr>
           <td>  <% item.ec_sku %> </td>
+          <td>  <% item.description %> </td>
           <td><% item.ec_quantity  %> </td><td><% item.ec_price %> </td>
         </tr>
     <% END %>
         <tr>
-          <td colspan=2 align='right'>Subtotal</td><td><% ec_cart.cart.subtotal %></td>
+          <td colspan=3 align='right'>Subtotal</td><td><% ec_cart.cart.subtotal %></td>
         </tr>
       <% FOREACH adjustment IN ec_cart.cart.adjustments %>
-        <tr><td colspan=2 align='right'><% adjustment.description %></td><td><% adjustment.value %></td></tr> 
+        <tr><td colspan=3 align='right'><% adjustment.description %></td><td><% adjustment.value %></td></tr> 
       <% END %> 
       </tbody>
       <tfoot>
         <tr>
-          <td colspan=2 align='right'>Total</td><td> <% ec_cart.cart.total %> </td>
+          <td colspan=3 align='right'>Total</td><td> <% ec_cart.cart.total %> </td>
         </tr>
       </tfoot>
     </table>
