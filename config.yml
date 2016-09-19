@@ -21,11 +21,11 @@ charset: "UTF-8"
 # template: "simple"
 
 template: "template_toolkit"
-  engines:
-    template:
-      template_toolkit:
-        start_tag: '<%'
-        end_tag:   '%>'
+engines:
+  template:
+    template_toolkit:
+      start_tag: '<%'
+      end_tag:   '%>'
 
 # session engine
 #
