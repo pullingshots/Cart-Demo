@@ -3,6 +3,7 @@ use Dancer2;
 use Dancer2::Plugin::Cart;
 
 use Dancer2::Plugin::Cart::Stripe;
+use Dancer2::Plugin::Cart::Stripe::DefaultHooks;
 
 our $VERSION = '0.1';
 
