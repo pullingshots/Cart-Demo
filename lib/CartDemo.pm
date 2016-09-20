@@ -13,7 +13,7 @@ get '/' => sub {
 
 hook 'plugin.cart.products' => sub {
   my $ec_cart = session('ec_cart');
-  $ec_cart->{products} = [ { ec_sku => 'BOOK', ec_price => 100, description => 'The Dancer2 Book' } ];
+  push @{$ec_cart->{products}}, { ec_sku => 'BOOK', ec_price => 100, description => 'The Dancer2 Book' };
   session ec_cart => $ec_cart;
 };
 
