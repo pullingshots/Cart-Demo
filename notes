@@ -1,0 +1,59 @@
+Why did we write Dancer2::Plugin::Cart?
+  - we didn't need a schema, we just needed something to manage the display of product, and collection of data at checkout
+  - we have an existing schema and business logic that we simply wanted to hook in at the appropriate stage
+  - we could have simply written a cart from scratch... but why not create something others can use
+  - the farther we got into it, the more interesting it became
+It was so easy to build a checkout
+I started to envision an entire ecosystem of plugins that allowed you to pick and choos
+
+1 Base Dancer App
+2 Use Plugin
+3 Add link to /products
+  - no products, we need to add some. Let's use the products hook
+4 Add a Product
+  - a Dancer2 Book!
+  - Let's place an order, that was quick!
+5 Create the view files
+  - use the script provided with the Plugin, currently creates Template Toolkit views
+  - this allows us to start customizing the data that is stored and displayed from the session
+6 Display the description we added in Step 4
+  - edit all of the view files
+7 Send an Email receipt
+  - use the after_checkout hook
+  - we are simply sending the receipt view template
+  - note that currently the order is only in the session, we could also add a hook to email the order to the admin
+8 Add a coupon input
+  - by simply adding an input to the shipping form, it is now accessible from the hooks and part of the order in the session
+9 Check if we have a valid coupon
+  - use the validate_shipping_params hook
+  - error is displayed on the shipping view
+10 Clear default adjustments
+  - default adjustmenst are added for discounts, shipping, and taxes
+  - we could add our discount into the discounts, but we want to display the coupon description
+  - use the adjustments hook
+11 Add coupon discount to adjustments
+  - use the adjustments hook - again! hooks are run in the order they are defined
+  - simply push an adjustment!
+  - let's take a look
+12 Use Cart::Stripe Plugin
+  - add stripe api_key, public_api_key, and currency to config
+  - this plugin provides some new keywords we can use in our hooks
+13 Use DefaultHooks
+  - one of the default hooks brings plans in from Stripe
+  - but our products hook is overwriting the products list
+14 let's push our products instead
+  - Now we have Stripe plans in our cart!
+15 Add Stripe form to checkout view
+  - now we can accept payments by cc!
+
+What's Next?
+
+Cart::Shipment
+Cart::VAT
+Cart::LedgerSMB?
+Cart::Interchange6?
+
+Will you join us? github.com/YourSole/Cart
+
+
+
