@@ -2,6 +2,8 @@ package CartDemo;
 use Dancer2;
 use Dancer2::Plugin::Cart;
 
+use Dancer2::Plugin::Cart::Stripe;
+
 our $VERSION = '0.1';
 
 get '/' => sub {
