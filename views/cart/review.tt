@@ -36,8 +36,15 @@
       <tr><td>Billing <a href='billing' class='btn btn-primary'>edit</a></td><td><% ec_cart.billing.form.email %></td></tr>
   </table>
   <form method='post' action='checkout'>
-  <p>
     <a href='billing' class='btn btn-primary'>Back</a>
-    <input type='submit' value = 'Place Order' class='btn btn-primary'>
-  </p>
+    <script
+      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="<% plugin_name = 'Cart::Stripe' %><% settings.plugins.$plugin_name.public_api_key %>"
+      data-amount="<% ec_cart.cart.stripe_total %>"
+      data-name="<% settings.appname %>"
+      data-description=""
+      data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+      data-locale="auto"
+      data-currency="cad">
+    </script>
   </form><% END %>
