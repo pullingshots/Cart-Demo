@@ -1,10 +1,94 @@
+Dancer2::Plugin::Cart
+  Hi, my name is Andrew Baerg
+  A little bit about myself
+  I like to ride bikes... to work, in the rocky mountains, and also in vienna
+  I am married and have 3 awesome boys
+  I work for SOLE who is the maker of world famous heat mouldable insoles and has recently started to make shoes with recycled wine corks!
+  I have been developing their systems since 2001 - the golden age of Interchange
+
 Why did we write Dancer2::Plugin::Cart?
-  - we didn't need a schema, we just needed something to manage the display of product, and collection of data at checkout
-  - we have an existing schema and business logic that we simply wanted to hook in at the appropriate stage
-  - we could have simply written a cart from scratch... but why not create something others can use
-  - the farther we got into it, the more interesting it became
-It was so easy to build a checkout
-I started to envision an entire ecosystem of plugins that allowed you to pick and choos
+  It is no longer the golden age of Interchange5.
+  I'd like to say it is the golden age of Dancer2
+  Bottom line is we really want to start developing with Dancer2
+
+However, we have an existing database in Interchange5
+  on top of which is built a valuable erp system
+
+with a lot of existing business logic
+  simply put we don't want to throw this away
+
+so we asked the questions
+  what if we had an ecommerce platform that didn't provide a schema
+  that didn't have a source of product data
+  that didn't provide functions to calculate shipping, taxes, or discounts
+  not even payment processing
+
+what would it do?
+
+manage the cart session
+  functions for adding and removing items, and changing quantities
+
+calculate totals
+  function to calculate an order total
+
+provide a checkout flow
+  shipping, billing form
+  place order
+
+Session storage
+  at a minimum, it would need to store all of this temporarily in the session
+
+hooks!
+  to use or modify the session data
+
+inject product data
+  source of data may simply be hard coded, it may be a single item
+  maybe it's coming from a data source, like your accounting system
+  maybe it's coming from an external source, for example, you can set up products within the Stripe payment gateway and fetch them using their API.
+
+Adjustments to total
+  for things like taxes, shipping, discounts
+
+Validation of Forms
+  shipping, billing
+
+Placing the order
+  process payment
+  send receipt
+  order logging
+
+Ecommerce is complicated and unique
+  there is no way to sugar coat this fact
+  unless you have blinders on and are simply ignoring the complexity, you will know that a single ecommerce platform simply cannot do everything or handle every situation.
+
+BUT we CAN make it easy
+  to do everything
+
+How do we make it easy?
+
+out of the box demo
+  clean slate to work with
+  you don't have to peel back the layers of copmlexity to do something simple
+hooks for maintainability
+  complexity is not hidden, it's in a separate plugin or your own modules
+ecosystem of plugins
+  most cases you can simply use a CPAN module in your hook
+  but I also see plugins under the Cart namespace which provide standard hooks to things like payment gateways
+
+Why should anyone else care?
+
+Doesn't everyone want a clone of Amazon for their store?
+  not even close
+
+majority of web stores are extremely simple or unique
+  they are either selling a single item or 2
+  or selling a subscription to a service
+
+Stripe
+  payment processors like Stripe provide majority of customer and order schema
+  they don't need to duplicate the schema or even provide an admin
+
+Live Demo
 
 1 Base Dancer App
 2 Use Plugin
@@ -47,6 +131,8 @@ I started to envision an entire ecosystem of plugins that allowed you to pick an
   - now we can accept payments by cc!
 
 What's Next?
+
+Start using it!
 
 Cart::Shipment
 Cart::VAT
