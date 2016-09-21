@@ -1,1 +1,144 @@
-Dancer2::Plugin::Cart demo used for my talk at Perl::Dancer conference 2016 in Vienna
+This is the Dancer2::Plugin::Cart demo used for my talk at Perl::Dancer conference 2016 in Vienna
+
+You can clone this to run the demo for yourself, or follow the steps below to create your own demo from scratch
+
+1. Start with a fresh Dancer2 app and install the plugin
+
+   https://metacpan.org/pod/distribution/Dancer2/lib/Dancer2/Manual.pod#INSTALL
+   
+   cpanm Dancer2::Plugin::Cart
+
+2. Use the plugin in your Dancer2 App.pm
+
+   use Dancer2::Plugin::Cart
+
+3. Add a link to the product list in your view template
+
+   <a href="/products">Shop!</a>
+
+4. Add a product using the products hook in your App.pm
+
+   hook 'plugin.cart.products' => sub {
+     my $ec_cart = session('ec_cart');
+     $ec_cart->{products} = [ { ec_sku => 'BOOK', ec_price => 100, description => 'The Dancer2 Book' } ];
+     session ec_cart => $ec_cart;
+   };
+
+NOTE: At this point, you can add the item to your cart and proceed through checkout.
+Everything is stored in the ec_cart session variable.
+
+5. Create the view template files so you can edit them
+
+   create_cart_views.pl
+
+6. Modify your config.yml to use template toolkit
+
+   template: "template_toolkit"
+   engines:
+     template:
+       template_toolkit:
+         start_tag: '<%'
+         end_tag:   '%>'
+
+7. Modify all of your view templates to diplay the product description
+
+   see commit #64bc143fd5 for details
+
+8. Add a hook to send a receipt via email to the billing email address
+
+   hook 'plugin.cart.after_checkout' => sub {
+     use Dancer2::Plugin::Email;
+     my $email = session('ec_cart')->{billing}->{form}->{email};
+     email {
+       from => 'andrew.baerg@gmail.com',
+       to => $email,
+       subject => 'Receipt',
+       type => 'html',
+       body => template 'cart/receipt', { cart => session('ec_cart') }, { layout => 'cart.tt' },
+     };
+   };
+
+NOTE: you may need to add config for sending email to your development.yml
+
+plugins:
+  Email:
+    transport:
+      SMTP:
+        ssl: 1
+        host: 'smtp.gmail.com'
+        port: 465
+        sasl_username: 'gmail username'
+        sasl_password: 'gmail password'
+
+
+NOTE: if you place an order at this point, you should receive an email receipt
+
+9. Add a coupon field to the shipping form
+
+   see commit #d0ac9de07
+
+10. Add a hook to validate the coupon code that was entered
+
+   hook 'plugin.cart.validate_shipping_params' => sub {
+     my $ec_cart = session('ec_cart');
+     my $coupon = $ec_cart->{shipping}->{form}->{coupon};
+     if ($coupon && $coupon ne 'DANCER2016') {
+       delete $ec_cart->{shipping}->{form}->{coupon};
+       $ec_cart->{shipping}->{error} = "Sorry, invalid coupon code entered, please try again";
+     }
+     session ec_cart => $ec_cart;
+   };
+
+11. Add a hook to clear the default adjustments
+
+   hook 'plugin.cart.adjustments' => sub {
+     my $ec_cart = session('ec_cart');
+     $ec_cart->{cart}->{adjustments} = [];
+     session ec_cart => $ec_cart;
+   };
+
+12. Add a hook to add an adjustment for the coupon
+
+   hook 'plugin.cart.adjustments' => sub {
+     my $ec_cart = session('ec_cart');
+     my $coupon = $ec_cart->{shipping}->{form}->{coupon};
+     if ($coupon && $coupon eq 'DANCER2016') {
+       push @{$ec_cart->{cart}->{adjustments}}, { description => 'Perl::Dancer 2016 Conference Discount', value => -50 };
+     }
+     session ec_cart => $ec_cart;
+   };
+
+13. use the Stripe plugin in your App.pm
+
+   use Dancer2::Plugin::Cart::Stripe
+
+NOTE: the version of the stripe plugin used in this demo can be downloaded from this repo. You will need the following files:
+   
+   lib/Dancer2/Plugin/Cart/Stripe.pm
+   lib/Dancer2/Plugin/Cart/Stripe/DefaultHooks.pm
+
+NOTE: you will need to add your Stripe config to development.yml
+
+   plugins:
+     Cart::Stripe:
+       api_key: 'private key'
+       public_api_key: 'public key'
+       currency: 'cad'
+
+14. use the Stripe default hooks
+
+   use Dancer2::Plugin::Cart::Stripe::DefaultHooks
+
+15. fix our original products hook to push the product onto the list instead of overwriting the list
+
+   push @{$ec_cart->{products}}, { ec_sku => 'BOOK', ec_price => 100, description => 'The Dancer2 Book' };
+
+NOTE: you will need to add some plans to your stripe account in order for them to load into your product list
+
+16. add the Stripe script to your review template
+
+   see commit #a4d0efa2
+
+NOTE: at this point you should be able to check out with Stripe and your customer and order will be created on your Stripe account!
+
+Congratulations, you're done!
