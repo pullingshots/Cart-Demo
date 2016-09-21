@@ -3,18 +3,19 @@ Dancer2::Plugin::Cart
   A little bit about myself
   I like to ride bikes... to work, in the rocky mountains, and also in vienna
   I am married and have 3 awesome boys
-  I work for SOLE who is the maker of world famous heat mouldable insoles and has recently started to make shoes with recycled wine corks!
-  I have been developing their systems since 2001 - the golden age of Interchange
+  I work for SOLE who is the maker of world famous heat mouldable insoles and soon to be world famous shoes made with recycled wine corks!
+  I developed their web store in 2002 - what I like to call the golden age of interchange5 - and have been building their systems since then.
+  Most recently the team at SOLE has written Dancer2:Plugin::Cart to run a new webstore for their cork recycling program.
 
 Why did we write Dancer2::Plugin::Cart?
-  It is no longer the golden age of Interchange5.
+  Frankly It is no longer the golden age of Interchange5.
   I'd like to say it is the golden age of Dancer2
-  Bottom line is we really want to start developing with Dancer2
+  Bottom line is we really want to start developing with Dancer2 - and that means we needed a Cart
 
 However, we have an existing database in Interchange5
-  on top of which is built a valuable erp system
+  on top of which is built a valuable erp and crm system
 
-with a lot of existing business logic
+we also have a lot of existing business logic within various Perl modules and DBIx classes
   simply put we don't want to throw this away
 
 so we asked the questions
@@ -25,39 +26,36 @@ so we asked the questions
 
 what would it do?
 
-manage the cart session
-  functions for adding and removing items, and changing quantities
+it would need to manage the cart session
+  it would need functions for adding and removing items, and changing quantities
 
-calculate totals
-  function to calculate an order total
+it would need to calculate the order subtotal and total
 
-provide a checkout flow
-  shipping, billing form
-  place order
+it would need to provide a checkout flow
+  a shipping and billing form
+  and a place order routine
 
-Session storage
-  at a minimum, it would need to store all of this temporarily in the session
+and at a minimum, it would need to store all of this in the session so that we could actually do something with it.
 
-hooks!
-  to use or modify the session data
+and most importantly, it would need to provide a way to hook into all of this
+  to use or modify the session data that is being collected
 
-inject product data
+it would need a hook to inject product data
   source of data may simply be hard coded, it may be a single item
   maybe it's coming from a data source, like your accounting system
   maybe it's coming from an external source, for example, you can set up products within the Stripe payment gateway and fetch them using their API.
 
-Adjustments to total
+it would need a hook to add adjustments to total
   for things like taxes, shipping, discounts
 
-Validation of Forms
-  shipping, billing
+it would need hooks to provide Validation of shipping and billing Forms
 
-Placing the order
-  process payment
-  send receipt
-  order logging
+and finally it would need hooks into the place order routine
+  to process the payment
+  send a receipt
+  and do order logging
 
-Ecommerce is complicated and unique
+Ecommerce is really complicated mostly because every business is unique
   there is no way to sugar coat this fact
   unless you have blinders on and are simply ignoring the complexity, you will know that a single ecommerce platform simply cannot do everything or handle every situation.
 
@@ -73,20 +71,23 @@ hooks for maintainability
   complexity is not hidden, it's in a separate plugin or your own modules
 ecosystem of plugins
   most cases you can simply use a CPAN module in your hook
-  but I also see plugins under the Cart namespace which provide standard hooks to things like payment gateways
+  but I also see plugins under the Plugin::Cart namespace which provide standard hooks to things like payment gateways
 
-Why should anyone else care?
+Why should anyone other than us at SOLE care?
 
 Doesn't everyone want a clone of Amazon for their store?
   not even close
 
-majority of web stores are extremely simple or unique
-  they are either selling a single item or 2
-  or selling a subscription to a service
+from my experience, the majority of new web stores being built are quite simple
+  they are either selling a small number of items
+  or they are selling a subscription to a service
 
-Stripe
-  payment processors like Stripe provide majority of customer and order schema
-  they don't need to duplicate the schema or even provide an admin
+payment processors like Stripe are common which provide the customer and order schema
+  there is no need to duplicate this schema or even provide an admin
+
+So, I am happy to let you know that the cart plugin is ready to use!
+
+Let's check it out!
 
 Live Demo
 
@@ -136,8 +137,8 @@ Start using it!
 
 Cart::Shipment
 Cart::VAT
-Cart::LedgerSMB?
-Cart::Interchange6?
+Cart::Interchange5
+Cart::Stripe
 
 Will you join us? github.com/YourSole/Cart
 
