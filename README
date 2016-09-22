@@ -1,5 +1,7 @@
 This is the Dancer2::Plugin::Cart demo used for my talk at Perl::Dancer conference 2016 in Vienna
 
+Slides at http://slides.com/baergaj/dancer2-plugin-cart
+
 You can clone this to run the demo for yourself, or follow the steps below to create your own demo from scratch
 
 1. Start with a fresh Dancer2 app and install the plugin
